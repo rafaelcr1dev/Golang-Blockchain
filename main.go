@@ -21,7 +21,7 @@ func main() {
 		fmt.Printf("Hash: %x\n", block.Hash)
 
 		pow := blockchain.NewProof(block)
-		fmt.Printf("PoW: %s\n", strconv.FormatBool(pow.Validate()))
+		fmt.Printf("POW: %s\n", strconv.FormatBool(pow.Validate()))
 		fmt.Println()
 
 	}

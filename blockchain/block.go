@@ -2,20 +2,34 @@ package blockchain
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"encoding/gob"
 	"log"
 )
 
 type Block struct {
 	Hash 	 []byte // Hash é um algoritmo ou fórmula muito complicada que converte qualquer sequência de caracteres em uma sequência de 64 caracteres ou números
-	Data	 []byte
+	Transactions []*Transaction
 	PrevHash []byte
 	Nonce    int // Nonce é um número aleatório usado apenas uma vez
 }
 
-func CreateBlock(data string, prevHash []byte) *Block {
+func (b *Block) HashTransactions() []byte {
+	var txHashes [][]byte
+	var txHash [32]byte
+
+	for _, tx := range b.Transactions {
+		txHashes = append(txHashes, tx.ID)
+	}
+
+	txHash = sha256.Sum256(bytes.Join(txHashes, []byte{}))
+
+	return txHash[:]
+}
+
+func CreateBlock(txs []*Transaction, prevHash []byte) *Block {
 	// Criar a estrutura do novo bloco
-	block := &Block{[]byte{}, []byte(data), prevHash, 0}
+	block := &Block{[]byte{}, txs, prevHash, 0}
 	/*
 	Prova de trabalho - Proof of Work
 	----------------------------------
@@ -32,9 +46,9 @@ func CreateBlock(data string, prevHash []byte) *Block {
 	return block
 }
 
-func Genesis() *Block {
+func Genesis(coinbase *Transaction) *Block {
 	// Bloco inicial da rede
-	return CreateBlock("Genesis", []byte{})
+	return CreateBlock([]*Transaction{coinbase}, []byte{})
 }
 
 func (b *Block) Serialize() []byte {

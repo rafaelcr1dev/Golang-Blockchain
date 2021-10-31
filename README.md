@@ -31,3 +31,15 @@ go run main.go getbalance -address "Lays"
 
 go run main.go send -from "Lays" -to "Fred" -amount 50
 ```
+
+## Create Wallet
+
+```
+go run main.go createwallet
+```
+
+## List Wallet
+
+```
+go run main.go listaaddresses
+```

@@ -30,6 +30,8 @@ go run main.go printchain
 go run main.go getbalance -address "Lays"
 
 go run main.go send -from "Lays" -to "Fred" -amount 50
+
+go run main.go send -to 1P91bZQQezspVikwc5MAmsKQFkarTUWLra -from 1FHrqm6EB6qdkvC6r3EKGnFUTdV3uD2uHx -amount 50
 ```
 
 ## Create Wallet
@@ -42,4 +44,10 @@ go run main.go createwallet
 
 ```
 go run main.go listaaddresses
+```
+
+## See transactions
+
+```
+go run main.go printchain
 ```
